@@ -823,8 +823,7 @@ def main():
     global_step = 0
     if args.do_train:
         optimizer = BertAdam(optimizer_grouped_parameters, lr=args.learning_rate, warmup=args.warmup_proportion, t_total=num_train_optimization_steps)
-        train_features = convert_examples_to_features(
-            train_examples, label_list, args.max_seq_length, tokenizer, output_mode)
+        train_features = convert_examples_to_features(train_examples, label_list, args.max_seq_length, tokenizer, output_mode)
         logger.info("***** Running training *****")
         logger.info("  Num examples = %d", len(train_examples))
         logger.info("  Batch size = %d", args.train_batch_size)
@@ -899,8 +898,7 @@ def main():
             ## At this point we should do any between-epoch evaluations:
             if args.do_eval:
                 eval_examples = processor.get_dev_examples(args.task_dir)
-                eval_features = convert_examples_to_features(
-                    eval_examples, label_list, args.max_seq_length, tokenizer, output_mode)
+                eval_features = convert_examples_to_features(eval_examples, label_list, args.max_seq_length, tokenizer, output_mode)
                 logger.info("***** Running evaluation *****")
                 logger.info("  Num examples = %d", len(eval_examples))
                 logger.info("  Batch size = %d", args.eval_batch_size)
@@ -945,8 +943,7 @@ def main():
                     if len(preds) == 0:
                         preds.append(logits.detach().cpu().numpy())
                     else:
-                        preds[0] = np.append(
-                            preds[0], logits.detach().cpu().numpy(), axis=0)
+                        preds[0] = np.append(preds[0], logits.detach().cpu().numpy(), axis=0)
 
                 eval_loss = eval_loss / nb_eval_steps
                 preds = preds[0]
@@ -1002,8 +999,7 @@ def main():
 
     if args.do_eval:
         eval_examples = processor.get_dev_examples(args.task_dir)
-        eval_features = convert_examples_to_features(
-            eval_examples, label_list, args.max_seq_length, tokenizer, output_mode)
+        eval_features = convert_examples_to_features(eval_examples, label_list, args.max_seq_length, tokenizer, output_mode)
         logger.info("***** Running evaluation *****")
         logger.info("  Num examples = %d", len(eval_examples))
         logger.info("  Batch size = %d", args.eval_batch_size)
